@@ -5,3 +5,5 @@ djangorestframework==3.14.0
 psycopg2==2.9.9
 pytz==2024.1
 sqlparse==0.4.4
+
+Faker~=23.3.0

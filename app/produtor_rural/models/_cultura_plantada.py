@@ -8,9 +8,10 @@ class CulturaPlantada(models.Model):
     cultura = models.CharField('Cultura plantada', max_length=50, choices=CULTURAS_CHOICES)
 
     def __str__(self):
-        return self.cultura
+        return f'{self.produtor} - {self.cultura}'
 
     class Meta:
         db_table = 'cultura_plantada'
         verbose_name = 'Cultura'
+        unique_together = ('produtor', 'cultura')
 

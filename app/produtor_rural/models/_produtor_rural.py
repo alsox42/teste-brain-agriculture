@@ -9,9 +9,9 @@ class ProdutorRural(models.Model):
     nome_fazenda = models.CharField('Nome da Fazenda', max_length=100)
     cidade = models.CharField('Cidade', max_length=50)
     estado = models.CharField('Estado', max_length=50, choices=ESTADOS_CHOICES)
-    area_total = models.FloatField('Área total em hectares da fazenda')
-    area_agricultavel = models.FloatField('Área agricultável em hectares')
-    area_vegetacao = models.FloatField('Área de vegetação em hectares')
+    area_total = models.DecimalField('Área total em hectares da fazenda',decimal_places=2, max_digits=6)
+    area_agricultavel = models.DecimalField('Área agricultável em hectares',decimal_places=2, max_digits=6)
+    area_vegetacao = models.DecimalField('Área de vegetação em hectares', decimal_places=2, max_digits=6)
 
     def __str__(self):
         return self.nome_produtor

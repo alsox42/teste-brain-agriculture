@@ -23,8 +23,8 @@ class ProdutorRuralSerializer(serializers.ModelSerializer):
             'estado',
             'area_total',
             'area_agricultavel',
-            'cultura_plantada',
-            'area_vegetacao'
+            'area_vegetacao',
+            'cultura_plantada'
         ]
 
     def validate_doc_de_registro(self, value):

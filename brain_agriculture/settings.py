@@ -1,5 +1,4 @@
 from pathlib import Path
-
 from decouple import config
 
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -56,10 +55,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'brain_agriculture.wsgi.application'
 
-
-# Database
-# https://docs.djangoproject.com/en/5.0/ref/settings/#databases
-
 DATABASES = {
     'default': {
         'ENGINE': config('DB_ENGINE'),
@@ -96,13 +91,5 @@ USE_I18N = True
 
 USE_TZ = True
 
-
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/5.0/howto/static-files/
-
 STATIC_URL = 'static/'
-
-# Default primary key field type
-# https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
-
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
