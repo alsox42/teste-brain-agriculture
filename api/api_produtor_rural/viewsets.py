@@ -8,7 +8,7 @@ from api.api_produtor_rural.serializers import ProdutorRuralSerializer
 class ProdutorRuralViewSet(viewsets.ModelViewSet):
     queryset = ProdutorRural.objects.all()
     serializer_class = ProdutorRuralSerializer
-    permission_classes = [IsAuthenticated,]
+    #permission_classes = [IsAuthenticated,]
 
 
 

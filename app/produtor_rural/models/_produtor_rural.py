@@ -1,7 +1,13 @@
 from django.db import models
 
 from app.produtor_rural.choices import ESTADOS_CHOICES
-
+"""
+Importante: Tendo a oportunidade de conversar com o arquiteto de software
+ou com o Stakeholder do projeto, eu proporia que houvesse um cadastro para produtor rural. E
+um segundo cadastro para a(s) fazenda(s). Dessa forma não haveria repetição de dados, pois
+da forma como a tabela ProdutorRural foi implementada, os produtores rurais que tiverem 
+mais de uma fazenda, teram seu nome repetido em cada cadastro. 
+"""
 
 class ProdutorRural(models.Model):
     doc_de_registro = models.CharField('CPF ou CNPJ', max_length=100, unique=True)

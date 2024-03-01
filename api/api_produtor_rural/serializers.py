@@ -7,15 +7,18 @@ from app.produtor_rural.services import validate_cpf, validate_cnpj
 class CulturaPlantadaSerializer(serializers.ModelSerializer):
     class Meta:
         model = CulturaPlantada
-        fields = '__all__'
+        fields = ['id', 'cultura']
 
 
 class ProdutorRuralSerializer(serializers.ModelSerializer):
-    cultura_plantada = CulturaPlantadaSerializer()
+    id = serializers.IntegerField(read_only=True)
+    cultura_plantada = CulturaPlantadaSerializer(many=True, read_only=True)
+    culturas = serializers.ListField(child=serializers.CharField(), required=False)
 
     class Meta:
         model = ProdutorRural
         fields = [
+            'id',
             'doc_de_registro',
             'nome_produtor',
             'nome_fazenda',
@@ -24,8 +27,22 @@ class ProdutorRuralSerializer(serializers.ModelSerializer):
             'area_total',
             'area_agricultavel',
             'area_vegetacao',
+            'culturas',
             'cultura_plantada'
+
         ]
+
+    def get_culturas(self, obj):
+        request = self.context.get('request')
+        if request and request.method in ['POST', 'PUT']:
+            return obj.culturas
+
+    # def to_representation(self, instance):
+    #     data = super().to_representation(instance)
+    #     request = self.context.get('request')
+    #     if request and request.method == 'GET':
+    #         data['cultura_plantada'] = CulturaPlantadaSerializer(instance.cultura_plantada).data
+    #     return data
 
     def validate_doc_de_registro(self, value):
         if len(value) == 11:
@@ -51,8 +68,52 @@ class ProdutorRuralSerializer(serializers.ModelSerializer):
         return data
 
     def create(self, validated_data):
-        pass
+        produtor_rural = ProdutorRural.objects.create(
+            doc_de_registro=validated_data['doc_de_registro'],
+            nome_produtor=validated_data['nome_produtor'],
+            nome_fazenda=validated_data['nome_fazenda'],
+            cidade=validated_data['cidade'],
+            estado=validated_data['estado'],
+            area_total=validated_data['area_total'],
+            area_agricultavel=validated_data['area_agricultavel'],
+            area_vegetacao=validated_data['area_vegetacao'],
+        )
 
+        for cultura in validated_data.get('culturas', []):
+            CulturaPlantada.objects.create(
+                produtor=produtor_rural,
+                cultura=cultura
+            )
 
+        return produtor_rural
 
+    def update(self, instance, validated_data):
+        instance.doc_de_registro = validated_data['doc_de_registro']
+        instance.nome_produtor = validated_data['nome_produtor']
+        instance.cidade = validated_data['cidade']
+        instance.estado = validated_data['estado']
+        instance.area_total = validated_data['area_total']
+        instance.area_agricultavel = validated_data['area_agricultavel']
+        instance.area_vegetacao = validated_data['area_vegetacao']
+        instance.save()
+
+        # Optei por atualizar dessa forma, devido a praticidade.
+        # No frontend no módulo de editar, imaginei que o registro
+        # a ser editado estara na tela da seguinte forma:
+        # Se houver apenas duas culturas setadas para a fazenda desse produtor,
+        # as outras opções de cultura plantada estarão off, caso o usuário, desmarque e/ou
+        # marque mais algum opção, o frontend deve atualizar no payload, o campo culturas
+        # com apenas as culturas desejadas. Abaixo,faço um filtro, localizo o produtor
+        # com todas suas culturas, excluo e gravo o novo list.
+
+        CulturaPlantada.objects.filter(
+                produtor=instance
+        ).delete()
+
+        for cultura in validated_data.get('culturas', []):
+            CulturaPlantada.objects.create(
+                    produtor=instance, cultura=cultura
+            )
+
+        return instance
 

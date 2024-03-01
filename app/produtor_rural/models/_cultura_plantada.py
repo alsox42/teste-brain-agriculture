@@ -12,6 +12,6 @@ class CulturaPlantada(models.Model):
 
     class Meta:
         db_table = 'cultura_plantada'
-        verbose_name = 'Cultura'
+        verbose_name = 'Culturas Plantada'
         unique_together = ('produtor', 'cultura')
 
