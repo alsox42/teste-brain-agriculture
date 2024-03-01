@@ -5,7 +5,6 @@ from django.urls import re_path
 from rest_framework import permissions
 from drf_yasg.views import get_schema_view
 from drf_yasg import openapi
-from api.api_accounts.viewsets import AccountsViewSet
 from api.api_dashboard.viewsets import DashboardViewSet
 from api.api_produtor_rural.viewsets import ProdutorRuralViewSet
 
@@ -27,7 +26,6 @@ schema_view = get_schema_view(
 router = routers.DefaultRouter()
 router.register('produtores-rurais', ProdutorRuralViewSet, basename='produtor_rural')
 router.register('dashboard', DashboardViewSet, basename='fazendas_totais')
-router.register('accounts/register', AccountsViewSet, basename='register')
 
 urlpatterns = [
    path('admin/', admin.site.urls),

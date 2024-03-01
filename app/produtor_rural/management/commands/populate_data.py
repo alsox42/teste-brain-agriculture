@@ -1,8 +1,8 @@
 import random
-from django.core.management.base import BaseCommand
 from faker import Faker
-from app.produtor_rural.models import ProdutorRural, CulturaPlantada
 from pycpfcnpj import gen
+from django.core.management.base import BaseCommand
+from app.produtor_rural.models import ProdutorRural, CulturaPlantada
 
 
 class Command(BaseCommand):

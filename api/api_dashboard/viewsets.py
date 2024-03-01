@@ -50,7 +50,6 @@ class DashboardViewSet(viewsets.ViewSet):
                                  'total_agricultavel'] or 0
         total_vegetacao = ProdutorRural.objects.aggregate(total_vegetacao=models.Sum('area_vegetacao'))[
                               'total_vegetacao'] or 0
-
         data = {
             "agricultavel": total_agricultavel,
             "vegetação": total_vegetacao

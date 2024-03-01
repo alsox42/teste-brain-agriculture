@@ -37,13 +37,6 @@ class ProdutorRuralSerializer(serializers.ModelSerializer):
         if request and request.method in ['POST', 'PUT']:
             return obj.culturas
 
-    # def to_representation(self, instance):
-    #     data = super().to_representation(instance)
-    #     request = self.context.get('request')
-    #     if request and request.method == 'GET':
-    #         data['cultura_plantada'] = CulturaPlantadaSerializer(instance.cultura_plantada).data
-    #     return data
-
     def validate_doc_de_registro(self, value):
         if len(value) == 11:
             if not validate_cpf(value):
@@ -109,7 +102,6 @@ class ProdutorRuralSerializer(serializers.ModelSerializer):
         CulturaPlantada.objects.filter(
                 produtor=instance
         ).delete()
-
         for cultura in validated_data.get('culturas', []):
             CulturaPlantada.objects.create(
                     produtor=instance, cultura=cultura

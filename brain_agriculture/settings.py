@@ -21,7 +21,6 @@ INSTALLED_APPS = [
     'rest_framework',
 
     # apps
-    'app.accounts',
     'app.produtor_rural',
 
 ]
