@@ -24,9 +24,12 @@ pip install -r requirements.txt
 ```
 
 ## Populando o Banco de Dados
+Antes de prosseguir, renomei o arquivo env.setup que esta
 
-Antes de prosseguir, certifique-se de criar o banco de dados no
-PostgreSQL. Em seguida, migre as alterações necessárias com o comando:
+na raiz do projeto para ( **.env** ), outro detalhe importante
+
+certifique-se de criar o banco de dados no
+PostgreSQL **db_brain_agriculture_dev**. Em seguida, migre as alterações necessárias com o comando:
 
 ```bash
 python manage.py migrate
